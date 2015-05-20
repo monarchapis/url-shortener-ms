@@ -1,0 +1,4 @@
+# Replace PropertiesPropertySourceLoader & YamlPropertySourceLoader with Encrypted versions
+org.springframework.boot.env.PropertySourceLoader=\
+com.monarchapis.api.env.EncryptedPropertiesPropertySourceLoader,\
+com.monarchapis.api.env.EncryptedYamlPropertySourceLoader

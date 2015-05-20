@@ -1,0 +1,25 @@
+# Monarch Connectivity
+monarch:
+    url:                    http://localhost:8000
+    environmentName:        demo
+    providerKey:            6kzFoQJedEz5e3OOzaVeKfQ3
+    sharedSecret:           LoXOm37LjJ8jd4SjTuQ7O13c
+
+jwt.key:                    xmDhS3Xo/mMwn64f+Ae03nsfGNjTgFqtqVSgCJ5YUNZCKnO2GRR7K8giV+CPqMk/Vo9dQ6Vk8v4QdHO5m/hIDQ==
+
+# Service options
+service:
+    delegateAuthorization:  false
+    bypassRateLimiting:     false
+    bypassAnalytics:        false
+
+error:
+    moreInfoFormat:         https://developer.company.com/errors/{1}
+
+# OAuth 2.0 Endpoints
+oauth.request.url:          http://localhost:8080/oauth2/authorize
+oauth.token.url:            http://localhost:8080/oauth2/token
+oauth.authorizationCode.request.url:    ${oauth.request.url}
+oauth.authorizationCode.token.url:      ${oauth.token.url}
+oauth.implicit.url:                     ${oauth.request.url}
+oauth.password.url:                     ${oauth.request.url}

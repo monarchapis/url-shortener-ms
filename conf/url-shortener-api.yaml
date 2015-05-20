@@ -1,0 +1,6 @@
+service.name:   urlShortener
+
+mongodb:
+    host:       localhost
+    port:       27017
+    db:         urlShortener

@@ -1,0 +1,5 @@
+conflict:
+    shortenedUrls:
+        errorCode:           URL-001
+        message:             "Shortened URL with slug \"{0}\" already exists."
+        developerMessage:    "The slug you provided has been taken by another shortened URL."
