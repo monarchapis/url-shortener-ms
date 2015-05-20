@@ -17,7 +17,7 @@ Here are the steps to run:
 ```
 mvn clean package
 export ENC_PWD="1qK6CHCkyhpzJHJuNhgVFzpc"
-java -jar target/url-shortener-ms-1.0.0.jar --server.port=8080 --spring.config.location=file:conf/global-api.properties,file:conf/url-shortener-api.properties
+java -jar target/url-shortener-ms-1.0.0.jar --server.port=8080 --spring.config.location=file:conf/global-api.yaml,file:conf/url-shortener-api.yaml
 ```
 
 Now, you will need to create the following in the Monarch admin console:
