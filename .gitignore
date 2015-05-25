@@ -1,8 +1,10 @@
 target
+build
 .cache
 .classpath
 .project
 .settings
+.gradle
 
 # OS generated files #
 ######################

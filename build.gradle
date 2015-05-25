@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'url-shortener-ms'
+    version =  '1.0.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-jersey")
+    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    // end::actuator[]
+    // tag::tests[]
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    // end::tests[]
+
+	compile("org.jasypt:jasypt-spring31:1.9.2")
+	compile("org.mongodb:mongo-java-driver:3.0.1")
+	compile("com.monarchapis:service-java-driver:0.8.2")
+}
+
+springBoot {
+    requiresUnpack = ["com.monarchapis:service-java-driver"]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}

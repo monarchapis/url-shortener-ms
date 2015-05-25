@@ -3,7 +3,7 @@ Sample Microservice: URL Shortener
 
 This is a Microservice version of the [URL Shortener API](https://github.com/monarchapis/url-shortener-api "URL Shortener API on GitHub").
 
-Demonstrates the enforcement of security policies using Monarch API Manager.  It is meant to be a simply corporate version of [Bitly](https://bitly.com "Bitly homepage"), where only authenticated users can shorten URLs.  A security standard like OAuth or JWT could be used to pass principal information to the API.
+Demonstrates the enforcement of security policies using Monarch API Manager.  It is meant to be a simple corporate version of [Bitly](https://bitly.com "Bitly homepage"), where only authenticated users can shorten URLs.  A security standard like OAuth or JWT could be used to pass principal information to the API.
 
 The API has 4 operations:
 
@@ -14,10 +14,20 @@ The API has 4 operations:
 
 Here are the steps to run:
 
+**Maven:**
+
 ```
 mvn clean package
 export ENC_PWD="1qK6CHCkyhpzJHJuNhgVFzpc"
 java -jar target/url-shortener-ms-1.0.0.jar --server.port=8080 --spring.config.location=file:conf/global-api.yaml,file:conf/url-shortener-api.yaml
+```
+
+**Gradle:**
+
+```
+./gradlew clean build
+export ENC_PWD="1qK6CHCkyhpzJHJuNhgVFzpc"
+java -jar build/libs/url-shortener-ms-1.0.0.jar --server.port=8080 --spring.config.location=file:conf/global-api.yaml,file:conf/url-shortener-api.yaml
 ```
 
 Now, you will need to create the following in the Monarch admin console:
