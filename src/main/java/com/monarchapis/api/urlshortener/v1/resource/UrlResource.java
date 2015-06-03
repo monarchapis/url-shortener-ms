@@ -1,23 +1,19 @@
 package com.monarchapis.api.urlshortener.v1.resource;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Optional;
+import com.monarchapis.api.urlshortener.v1.model.ExpandRequest;
 import com.monarchapis.api.urlshortener.v1.model.ItemsResponse;
+import com.monarchapis.api.urlshortener.v1.model.ShortenRequest;
 import com.monarchapis.api.urlshortener.v1.model.ShortenedUrl;
 import com.monarchapis.api.urlshortener.v1.service.UrlShortenerService;
-import com.monarchapis.driver.annotation.ApiInject;
 import com.monarchapis.driver.annotation.ApiVersion;
 import com.monarchapis.driver.annotation.Authorize;
 import com.monarchapis.driver.annotation.Claim;
@@ -31,15 +27,12 @@ import com.monarchapis.driver.model.Claims;
  * @title URL Shortener API
  * @version v1
  */
-@Component
-@Path("/v1")
+@RestController
+@RequestMapping(value = "/v1")
 @ApiVersion("1")
 public class UrlResource {
-	@Inject
+	@Autowired
 	private UrlShortenerService urlShortenerService;
-
-	@ApiInject
-	private Claims claims;
 
 	/**
 	 * Creates a shortened URL if one does not already exist, Otherwise, the
@@ -50,19 +43,18 @@ public class UrlResource {
 	 * @return the created or existing shortened URL
 	 */
 	@Authorize(client = "urls", delegated = "urls")
-	@Path("/urls/shorten")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public ShortenedUrl shorten(@FormParam("longUrl") String longUrl, @FormParam("slug") String slug) {
-		if (slug != null) {
+	@RequestMapping(value = "/urls/shorten", method = RequestMethod.POST)
+	public ShortenedUrl shorten(@Validated @RequestBody ShortenRequest request) {
+		if (request.getSlug() != null) {
+			Claims claims = Claims.current();
+
 			if (!claims.hasValueInClaim("marketing", "group")) {
 				throw new ForbiddenException("shortenedUrls");
 			}
 
-			return urlShortenerService.shorten(longUrl, slug);
+			return urlShortenerService.shorten(request.getLongUrl(), request.getSlug());
 		} else {
-			return urlShortenerService.shorten(longUrl);
+			return urlShortenerService.shorten(request.getLongUrl());
 		}
 	}
 
@@ -75,12 +67,9 @@ public class UrlResource {
 	 * @return the created or existing shortened URL
 	 */
 	@Authorize(client = "urls", delegated = "urls", claims = @Claim(type = "group", value = "marketing"))
-	@Path("/urls/shorten/{slug}")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public ShortenedUrl assign(@FormParam("longUrl") String longUrl, @PathParam("slug") String slug) {
-		return urlShortenerService.shorten(longUrl, slug);
+	@RequestMapping(value = "/urls/shorten/{slug}", method = RequestMethod.POST)
+	public ShortenedUrl assign(@Validated @RequestBody ShortenRequest request, @PathVariable("slug") String slug) {
+		return urlShortenerService.shorten(request.getLongUrl(), slug);
 	}
 
 	/**
@@ -95,15 +84,13 @@ public class UrlResource {
 	 * @response code = 404 message = "Shortened URL was not found."
 	 */
 	@Authorize(user = false, client = "urls")
-	@Path("/urls/expand")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public ShortenedUrl expand(@QueryParam("slug") String slug, @QueryParam("visit") boolean visit) {
-		if (visit) {
-			urlShortenerService.signalVisit(slug);
+	@RequestMapping(value = "/urls/expand", method = RequestMethod.GET)
+	public ShortenedUrl expand(@Validated @RequestBody ExpandRequest request) {
+		if (request.isVisit()) {
+			urlShortenerService.signalVisit(request.getSlug());
 		}
 
-		return require(urlShortenerService.expand(slug));
+		return require(urlShortenerService.expand(request.getSlug()));
 	}
 
 	/**
@@ -112,11 +99,9 @@ public class UrlResource {
 	 * @return The list of shortened URLs that the user has created.
 	 */
 	@Authorize(client = "urls", delegated = "urls")
-	@Path("/me/urls")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@RequestMapping(value = "/me/urls", method = RequestMethod.GET)
 	public ItemsResponse<ShortenedUrl> myUrls() {
-		String userId = claims.getSubject().or("unknown");
+		String userId = Claims.current().getSubject().or("unknown");
 
 		return new ItemsResponse<ShortenedUrl>(urlShortenerService.urlsByUserId(userId));
 	}
