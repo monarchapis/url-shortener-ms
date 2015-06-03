@@ -12,10 +12,10 @@ import com.monarchapis.api.urlshortener.v1.service.UrlShortenerService;
 import com.monarchapis.api.urlshortener.v1.service.mongodb.MongoDBUrlShortenerService;
 import com.monarchapis.driver.configuration.ConfigurationBundle;
 import com.monarchapis.driver.configuration.ResourceConfigurationBundle;
-import com.monarchapis.driver.spring.MonarchConfigurer;
+import com.monarchapis.driver.spring.rest.MonarchWebMvcConfigurer;
 
 @Configuration
-@Import(MonarchConfigurer.class)
+@Import(MonarchWebMvcConfigurer.class)
 public class Configurer {
 	@Value("${mongodb.host:localhost}")
 	private String mongodbHost;
