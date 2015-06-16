@@ -84,7 +84,7 @@ public class UrlResource {
 	 * @response code = 404 message = "Shortened URL was not found."
 	 */
 	@Authorize(user = false, client = "urls")
-	@RequestMapping(value = "/urls/expand", method = RequestMethod.GET)
+	@RequestMapping(value = "/urls/expand", method = RequestMethod.POST)
 	public ShortenedUrl expand(@Validated @RequestBody ExpandRequest request) {
 		if (request.isVisit()) {
 			urlShortenerService.signalVisit(request.getSlug());
