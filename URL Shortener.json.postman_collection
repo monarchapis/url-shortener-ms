@@ -1,0 +1,157 @@
+{
+	"id": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+	"name": "URL Shortener",
+	"description": "",
+	"order": [
+		"80c140b1-557a-2838-af94-f4a8407d2705",
+		"4d59bfee-a18b-a087-1073-af94ee1eb531",
+		"8290abb9-8369-5c5c-fbaf-189af36a9a50",
+		"7157a7d6-c122-76c8-ef12-c66938e3ba20",
+		"c966a108-98d8-e91d-4282-5ffec5709088"
+	],
+	"folders": [],
+	"timestamp": 1422290393887,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "4d59bfee-a18b-a087-1073-af94ee1eb531",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer OYwuMygXSYylhTtX8spfMsTR\nContent-Type: application/json\n",
+			"url": "http://localhost:8081/shortener/v1/urls/shorten",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1437766984411,
+			"name": "Shorten URL",
+			"description": "",
+			"collectionId": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+			"responses": []
+		},
+		{
+			"id": "7157a7d6-c122-76c8-ef12-c66938e3ba20",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer OYwuMygXSYylhTtX8spfMsTR\n",
+			"url": "http://localhost:8080/shortener/v1/me/urls",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1437767046840,
+			"name": "My URLs",
+			"description": "",
+			"collectionId": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+			"responses": []
+		},
+		{
+			"id": "80c140b1-557a-2838-af94-f4a8407d2705",
+			"headers": "Authorization: Basic U2wyU2t2RmpQNWg1WWM3WHJJdDdmVFZWOnZnNm1VUkVmNU1mQkZPU25IN1hzQnhzSQ==\n",
+			"url": "http://localhost:8080/oauth2/token",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "demo",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "demo",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "scope",
+					"value": "urls",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "Sl2SkvFjP5h5Yc7XrIt7fTVV",
+				"password": "vg6mUREf5MfBFOSnH7XsBxsI",
+				"id": "basic",
+				"timestamp": 1421265715602
+			},
+			"time": 1422301763837,
+			"name": "Authenticate",
+			"description": "",
+			"collectionId": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+			"responses": []
+		},
+		{
+			"id": "8290abb9-8369-5c5c-fbaf-189af36a9a50",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\n",
+			"url": "http://localhost:8080/shortener/v1/urls/expand?slug=wKYpxx&visit=true",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1422322913478,
+			"name": "Expand URL",
+			"description": "",
+			"collectionId": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+			"responses": []
+		},
+		{
+			"id": "c966a108-98d8-e91d-4282-5ffec5709088",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer OYwuMygXSYylhTtX8spfMsTR\n",
+			"url": "http://localhost:8080/shortener/v1/urls/shorten",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "longUrl",
+					"value": "http://www.google.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "slug",
+					"value": "2015-marketing-plan",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1437767055554,
+			"name": "Shorten URL w/ Slug",
+			"description": "",
+			"collectionId": "6f934c36-a1e6-89cb-e3c4-9c201469a612",
+			"responses": []
+		}
+	]
+}
